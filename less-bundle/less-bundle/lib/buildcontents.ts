@@ -37,14 +37,13 @@ function buildContents(lines: Array<string>, filePath: string) {
                 imported += '.less';
             }
 
-            // If a path is relative to node_modules, reference the cwd's node_modules folder
-            if (imported.charAt(0) === '~') {
-                var deTildedImport = imported.substr(1);
-                hashPath = path.resolve(process.cwd(), 'node_modules', deTildedImport);
-            } else {
-                hashPath = path.resolve(filePath, '..', imported);
+            // ignore node_modules and http imports
+            if (imported.charAt(0) === '~' || ~imported.indexOf('http')) {
+                currentLines.push(line);
+                continue;
             }
-            
+
+            hashPath = path.resolve(filePath, '..', imported);
             if (typeof imports[hashPath] === 'undefined') {
                 imports[hashPath] = true;
                 file = fs.readFileSync(hashPath, 'utf8');
