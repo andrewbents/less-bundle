@@ -173,6 +173,6 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-*.js
+# *.js
 *.map
 typings/
