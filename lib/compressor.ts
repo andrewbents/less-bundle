@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/tsd.d.ts" />
-
-import fs = require('fs');
+﻿import fs = require('fs');
 import path = require('path');
 import globals = require('./globals');
 import buildContents = require('./buildcontents');
@@ -30,11 +28,13 @@ function compress(config?: globals.IConfig, callback?: (err) => void) {
     globals.initialize(config);
 
     var src = path.resolve(globals.config.src),
-        writers = globals.writers,
-        output = globals.output,
         dest = globals.config.dest,
         version = globals.config.version,
         license = globals.config.license;
+
+    const writers = [];
+    const imports = {};
+    const output = [];
     
     // Goes through each file in the dest files and makes sure they have a 
     // .less extension.
@@ -52,10 +52,10 @@ function compress(config?: globals.IConfig, callback?: (err) => void) {
 
         var splitLines = data.split(/\r\n|\n/);
         splitLines[0] = splitLines[0].trim();
-        buildContents(splitLines, src);
+        buildContents(writers, imports, splitLines, src);
 
         // generate the output
-        generateOutput();
+        generateOutput(writers, output);
 
         // If a license file is specified, we want to prepend it to the output.
         if (!!license) {

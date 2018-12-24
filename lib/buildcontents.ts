@@ -1,14 +1,10 @@
-﻿/// <reference path="../typings/tsd.d.ts" />
-
-import fs = require('fs');
+﻿import fs = require('fs');
 import path = require('path');
 import Writer = require('./writer');
 import globals = require('./globals');
 
-function buildContents(lines: Array<string>, filePath: string) {
-    var writers = globals.writers,
-        imports = globals.imports,
-        lessRegex = globals.lessFileRegex,
+function buildContents(writers: Array<Writer>, imports: {}, lines: Array<string>, filePath: string) {
+  var lessRegex = globals.lessFileRegex,
         cssRegex = globals.cssFileRegex,
         stringLiteralRegex = globals.stringLiteralRegex,
         currentLines: Array<string> = [],
@@ -49,7 +45,7 @@ function buildContents(lines: Array<string>, filePath: string) {
                 file = fs.readFileSync(hashPath, 'utf8');
                 splitLines = file.split(/\r\n|\n/);
                 splitLines[0] = splitLines[0].trim();
-                buildContents(splitLines, hashPath);
+                buildContents(writers, imports, splitLines, hashPath);
             }
 
             continue;

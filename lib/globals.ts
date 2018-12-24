@@ -1,17 +1,12 @@
-﻿/// <reference path="../typings/tsd.d.ts" />
-
-import Writer = require('./writer');
-import path = require('path');
-
-export interface IConfig {
+﻿export interface IConfig {
     /**
-     * The path to a LESS file that imports all the desired files 
+     * The path to a LESS file that imports all the desired files
      * in the order you wish them to be bundled in.
      */
     src: string;
 
     /**
-     * An array of destination file paths. Once the framework 
+     * An array of destination file paths. Once the framework
      * is built, it will be output to these paths.
      */
     dest: Array<string>;
@@ -23,7 +18,7 @@ export interface IConfig {
 
     /**
      * The path to the license file to be added to the build as a
-     * comment. If a version is specified, the v.0.0.0 in the 
+     * comment. If a version is specified, the v.0.0.0 in the
      * license will be replaced with the version.
      */
     license?: string;
@@ -57,7 +52,7 @@ function validate(config: IConfig): Array<string> {
 
 /**
  * Creates the config.
- * 
+ *
  * @param cfg The root config.
  */
 export function initialize(cfg: IConfig) {
@@ -81,12 +76,6 @@ export function initialize(cfg: IConfig) {
 }
 
 export var config: IConfig,
-    writers: Array<Writer> = [],
-    output: Array<string> = [],
-
-    // hashes the import statements
-    imports: IObject<boolean> = {},
-
     // Finds all the <script src="" /> tags
     hrefRegex = /href=("[^"]*)/,
 

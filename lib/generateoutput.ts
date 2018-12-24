@@ -1,6 +1,4 @@
-﻿import globals = require('./globals');
-
-var output = globals.output;
+﻿import Writer = require('./writer');
 
 function removeEmptyStringsFromEnd(output: Array<string>) {
     while (!output[output.length - 1]) {
@@ -12,9 +10,8 @@ function removeEmptyStringsFromEnd(output: Array<string>) {
  * Iterates through writers and invokes their write 
  * function, building the output array.
  */
-function generateOutput() {
-    var writers = globals.writers,
-        previousLine = '';
+function generateOutput(writers: Array<Writer>, output: Array<string>) {
+    var previousLine = '';
 
     writers.forEach((writer) => {
         previousLine = writer.write(output, previousLine);
