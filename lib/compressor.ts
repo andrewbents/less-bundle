@@ -27,10 +27,11 @@ function writeToFile(path: string, data: Array<string>) {
 function compress(config?: globals.IConfig, callback?: (err) => void) {
     globals.initialize(config);
 
-    var src = path.resolve(globals.config.src),
-        dest = globals.config.dest,
-        version = globals.config.version,
-        license = globals.config.license;
+    const src = path.resolve(globals.config.src);
+    const dest = globals.config.dest;
+    const version = globals.config.version;
+    const license = globals.config.license;
+    const ignore = globals.config.ignore;
 
     const writers = [];
     const imports = {};
@@ -52,7 +53,7 @@ function compress(config?: globals.IConfig, callback?: (err) => void) {
 
         var splitLines = data.split(/\r\n|\n/);
         splitLines[0] = splitLines[0].trim();
-        buildContents(writers, imports, splitLines, src);
+        buildContents(writers, imports, splitLines, src, ignore);
 
         // generate the output
         generateOutput(writers, output);

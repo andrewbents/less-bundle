@@ -22,6 +22,8 @@
      * license will be replaced with the version.
      */
     license?: string;
+
+    ignore?: RegExp;
 }
 
 export interface IObject<T> {
